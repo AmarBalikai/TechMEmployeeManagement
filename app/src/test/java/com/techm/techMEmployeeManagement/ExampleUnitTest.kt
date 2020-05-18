@@ -1,4 +1,4 @@
-package com.techm.techmemployeemanagement
+package com.techm.techMEmployeeManagement
 
 import org.junit.Test
 
