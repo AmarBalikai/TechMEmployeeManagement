@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.techm.techMEmployeeManagement.callback.ResponseCallback
+import com.techm.techMEmployeeManagement.model.ModelDeleteEmployee
+import com.techm.techMEmployeeManagement.model.ModelServerResponse
 import com.techm.techMEmployeeManagement.repository.RepositoryViewModel
 import com.techm.techMEmployeeManagement.utils.ResponseStatus
 import org.jetbrains.annotations.NotNull

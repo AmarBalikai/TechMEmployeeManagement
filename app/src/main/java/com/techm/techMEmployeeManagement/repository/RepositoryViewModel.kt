@@ -1,6 +1,10 @@
 package com.techm.techMEmployeeManagement.repository
 
 import com.techm.techMEmployeeManagement.callback.ResponseCallback
+import com.techm.techMEmployeeManagement.model.ModelDeleteEmployee
+import com.techm.techMEmployeeManagement.model.ModelEmployeeRegistration
+import com.techm.techMEmployeeManagement.model.ModelEmployeeServerResponse
+import com.techm.techMEmployeeManagement.model.ModelServerResponse
 import com.techm.techMEmployeeManagement.network.ApiClient
 import com.techm.techMEmployeeManagement.utils.ResponseStatus
 import retrofit2.Call

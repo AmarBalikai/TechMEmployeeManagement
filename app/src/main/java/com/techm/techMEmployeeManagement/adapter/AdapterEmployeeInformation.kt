@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.techm.techMEmployeeManagement.R
+import com.techm.techMEmployeeManagement.model.ModelEmployeeInformation
+import kotlinx.android.synthetic.main.item_layout.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,8 +40,8 @@ class AdapterEmployeeInformation : RecyclerView.Adapter<ViewHolder> {
     // Binds each object in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.employeeName.text = items[position].employee_name
-        holder.employeeSalary.text = items[position].employee_salary
-        holder.employeeAge.text = items[position].employee_age
+        /*holder.employeeSalary.text = items[position].employee_salary
+        holder.employeeAge.text = items[position].employee_age*/
     }
 
     fun removeAt(position: Int) {
@@ -80,6 +82,7 @@ class AdapterEmployeeInformation : RecyclerView.Adapter<ViewHolder> {
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val employeeName: TextView = view.employeeName
-    val employeeSalary: TextView = view.employee_salary
-    val employeeAge: TextView = view.employee_age
+    val band: TextView = view.band
+    val department: TextView = view.department
+    val project: TextView = view.project
 }
