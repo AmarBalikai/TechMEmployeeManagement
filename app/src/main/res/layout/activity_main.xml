@@ -43,7 +43,7 @@
             tools:context=".view.AddEmployeeFragment">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/country_list"
+                android:id="@+id/employeeList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

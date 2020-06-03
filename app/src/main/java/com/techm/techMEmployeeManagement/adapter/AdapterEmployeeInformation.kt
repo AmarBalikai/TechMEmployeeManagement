@@ -4,24 +4,35 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.techm.techMEmployeeManagement.R
-import com.techm.techMEmployeeManagement.model.ModelEmployeeInformation
+import com.techm.techMEmployeeManagement.roomdatabase.ModelEmployeeRegistration
 import kotlinx.android.synthetic.main.item_layout.view.*
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 /**
  * This class for creating items in recycler view
  * */
 class AdapterEmployeeInformation : RecyclerView.Adapter<ViewHolder> {
-    private var itemsList = ArrayList<ModelEmployeeInformation>()
-    private var items = ArrayList<ModelEmployeeInformation>()
+    private var itemsList = ArrayList<ModelEmployeeRegistration>()
+    private var items = ArrayList<ModelEmployeeRegistration>()
     lateinit var context: Context
+    private lateinit var listener: ItemClickListener
 
-    constructor(items: ArrayList<ModelEmployeeInformation>, context: Context?) {
+    constructor(
+        items: ArrayList<ModelEmployeeRegistration>,
+        context: Context?,
+        listener: ItemClickListener
+    ) {
         this.items = items
+        this.listener = listener;
         if (context != null) {
             this.context = context
         }
@@ -39,9 +50,30 @@ class AdapterEmployeeInformation : RecyclerView.Adapter<ViewHolder> {
 
     // Binds each object in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.employeeName.text = items[position].employee_name
-        /*holder.employeeSalary.text = items[position].employee_salary
-        holder.employeeAge.text = items[position].employee_age*/
+        holder.employeeName.text = items[position].name
+        holder.designation.text = items[position].designation
+        holder.project.text = items[position].project
+        holder.band.text = "("+items[position].band+")"
+        holder.employeeId.text = items[position].employeeId
+        holder.competency.text = items[position].competency
+
+        holder.bind(items[position], position, listener)
+
+        when (items[position].competency) {
+            context.resources.getString(R.string.android) ->
+                Glide.with(context).load(context.resources.getDrawable(R.drawable.android))
+                    .into(holder.employeeImage);
+            context.resources.getString(R.string.ios) ->
+                Glide.with(context).load(context.resources.getDrawable(R.drawable.ios))
+                    .into(holder.employeeImage);
+            context.resources.getString(R.string.ux) ->
+                Glide.with(context).load(context.resources.getDrawable(R.drawable.ux))
+                    .into(holder.employeeImage);
+            context.resources.getString(R.string.tester) ->
+                Glide.with(context).load(context.resources.getDrawable(R.drawable.tester))
+                    .into(holder.employeeImage);
+
+        }
     }
 
     fun removeAt(position: Int) {
@@ -49,17 +81,19 @@ class AdapterEmployeeInformation : RecyclerView.Adapter<ViewHolder> {
         notifyItemRemoved(position)
     }
 
-    fun getItemAtPosition(position: Int): ModelEmployeeInformation {
+    fun getItemAtPosition(position: Int): ModelEmployeeRegistration {
         return this.items[position]
     }
+
     /**
      * setting updated list
      * */
-    fun setList(dataInformation: ArrayList<ModelEmployeeInformation>) {
-        this.items = dataInformation
+    fun setList(dataInformation: List<ModelEmployeeRegistration>) {
+        this.items = dataInformation as ArrayList<ModelEmployeeRegistration>
         itemsList.addAll(items)
         notifyDataSetChanged()
     }
+
     /**
      * filter employee list
      * **/
@@ -71,18 +105,37 @@ class AdapterEmployeeInformation : RecyclerView.Adapter<ViewHolder> {
             items.addAll(itemsList)
         } else {
             for (wp in itemsList) {
-                if (wp.employee_name.toLowerCase(Locale.getDefault()).contains(charText)) {
+                if (wp.name.toLowerCase(Locale.getDefault()).contains(charText)) {
                     items.add(wp)
                 }
             }
         }
         notifyDataSetChanged()
     }
+
+    interface ItemClickListener {
+        fun onItemClick(mModelEmployeeRegistration: ModelEmployeeRegistration, position: Int)
+    }
 }
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    fun bind(
+        ModelEmployeeRegistration: ModelEmployeeRegistration,
+        position: Int,
+        listener: AdapterEmployeeInformation.ItemClickListener
+    ) {
+        itemView.setOnClickListener {
+            listener.onItemClick(ModelEmployeeRegistration, position)
+        }
+    }
+
     val employeeName: TextView = view.employeeName
     val band: TextView = view.band
-    val department: TextView = view.department
+    val designation: TextView = view.designation
     val project: TextView = view.project
+    val employeeImage: ImageView = view.employeeImage
+    val employeeId: TextView = view.employeeId
+    val competency: TextView = view.competency
+
+
 }

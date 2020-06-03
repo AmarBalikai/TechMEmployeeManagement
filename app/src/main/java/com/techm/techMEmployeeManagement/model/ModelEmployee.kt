@@ -1,13 +1,13 @@
 package com.techm.techMEmployeeManagement.model
 
+import com.techm.techMEmployeeManagement.roomdatabase.ModelEmployeeRegistration
 import com.techm.techMEmployeeManagement.utils.ResponseStatus
 
 
 /**
  * This class for handle API response
  * */
-class ModelEmployeeServerResponse(
+class ModelEmployee(
     var error: String,
-    var status: ResponseStatus,
-    var data: ModelEmployeeRegistration
+    var status: ResponseStatus
 )

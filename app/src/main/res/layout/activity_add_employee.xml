@@ -1,131 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/imageback"
-    android:orientation="vertical"
-    android:padding="@dimen/_10sdp">
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:hint="@string/id"
-        app:boxStrokeColor="@color/colorBlack">
+    android:background="@drawable/imageback">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tvID"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/id"
+            app:boxStrokeColor="@color/colorBlack">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tvID"
+                android:editable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/name"
+
+            app:boxStrokeColor="@color/colorBlack">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldBand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/band">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldDesignation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/designation">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldEmployeeId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="@string/employee_id">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/please_select_competency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioGroup
+            android:id="@+id/rBtnGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <RadioButton
+                android:checked="true"
+                android:id="@+id/rBtnAndroid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/android" />
+
+            <RadioButton
+                android:id="@+id/rBtnIos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ios" />
+
+            <RadioButton
+                android:id="@+id/rBtnUX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ux" />
+
+            <RadioButton
+                android:id="@+id/rBtnTester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tester" />
+        </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:layout_weight="1"
+            android:id="@+id/spinnerProject"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:spinnerMode="dropdown"
              />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/addProject"
+            android:text="@string/action_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:hint="@string/name"
-
-        app:boxStrokeColor="@color/colorBlack">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <Button
+            android:id="@+id/buttonEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_40sdp"
+            android:paddingRight="@dimen/_40sdp"
+            android:text="@string/edit"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldBand"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:hint="@string/band">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <Button
+            android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:layout_gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+
             />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldDesignation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:hint="@string/designation">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <RadioGroup
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/rBtnAndroid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/android" />
-
-        <RadioButton
-            android:id="@+id/rBtnIos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ios" />
-
-        <RadioButton
-            android:id="@+id/rBtnUX"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ux" />
-
-        <RadioButton
-            android:id="@+id/rBtnTester"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tester" />
-    </RadioGroup>
-
-    <Spinner
-        android:layout_marginTop="@dimen/_20sdp"
-        android:id="@+id/spinnerProject"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp" />
-    <Button
-        android:id="@+id/buttonEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:paddingLeft="@dimen/_40sdp"
-        android:paddingRight="@dimen/_40sdp"
-        android:text="@string/edit"
-        android:textStyle="bold"
-        android:textColor="@color/colorBlack"
-        />
-
-    <Button
-        android:textStyle="bold"
-        android:textColor="@color/colorBlack"
-        android:id="@+id/buttonSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/save"
-
-        />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

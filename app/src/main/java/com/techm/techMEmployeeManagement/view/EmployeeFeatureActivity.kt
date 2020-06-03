@@ -7,7 +7,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -21,31 +20,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.techm.techMEmployeeManagement.R
 import com.techm.techMEmployeeManagement.adapter.AdapterEmployeeInformation
 import com.techm.techMEmployeeManagement.application.ApplicationContext.Companion.context
-import com.techm.techMEmployeeManagement.model.ModelEmployeeInformation
+import com.techm.techMEmployeeManagement.roomdatabase.ModelEmployeeRegistration
 import com.techm.techMEmployeeManagement.utils.*
 import com.techm.techMEmployeeManagement.viewmodel.ViewModelEmployeeInformation
 import kotlinx.android.synthetic.main.activity_main.*
 
-class EmployeeFeatureActivity : AppCompatActivity(), View.OnClickListener {
+class EmployeeFeatureActivity : AppCompatActivity(), View.OnClickListener,
+    AdapterEmployeeInformation.ItemClickListener {
     private lateinit var mDataViewModel: ViewModelEmployeeInformation
     private lateinit var mAdapter: AdapterEmployeeInformation
     private lateinit var builder: AlertDialog.Builder
     private lateinit var dialog: AlertDialog
     private var isSwipeToRefreshCall: Boolean = false
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private var mEmployeeList = ArrayList<ModelEmployeeInformation>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        title = getString(R.string.employee_information)
+        supportActionBar?.title=getString(R.string.employee_information)
         mDataViewModel = ViewModelProvider(this).get(ViewModelEmployeeInformation::class.java)
-        setupProgressDialog()
         searchView.queryHint = getString(R.string.search)
 
         swipeToRefresh.setOnRefreshListener {
-            isSwipeToRefreshCall = true
-            getCountryFeaturesData(context)
+            mDataViewModel.getEmployeeInformation()
+            swipeToRefresh.isRefreshing=false
         }
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -53,12 +51,12 @@ class EmployeeFeatureActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                newText.let { mAdapter.filter(it) }
+                newText.let { mAdapter.filter(it.trimStart()) }
                 return true
             }
         })
 
-        country_list.addItemDecoration(
+        employeeList.addItemDecoration(
             DividerItemDecoration(
                 context,
                 DividerItemDecoration.VERTICAL
@@ -67,10 +65,10 @@ class EmployeeFeatureActivity : AppCompatActivity(), View.OnClickListener {
         /**
          * Setting blank adapter for initialize
          */
-        mAdapter = AdapterEmployeeInformation(ArrayList(), context)
+        mAdapter = AdapterEmployeeInformation(ArrayList(), context, this)
         linearLayoutManager = LinearLayoutManager(this)
-        country_list.layoutManager = linearLayoutManager
-        country_list.adapter = mAdapter
+        employeeList.layoutManager = linearLayoutManager
+        employeeList.adapter = mAdapter
 
         val swipeHandler = object : SwipeToDeleteCallback(context) {
             override fun onMove(
@@ -85,116 +83,19 @@ class EmployeeFeatureActivity : AppCompatActivity(), View.OnClickListener {
                 var mModelEmployeeInformation =
                     mAdapter.getItemAtPosition(viewHolder.adapterPosition)
                 mAdapter.removeAt(viewHolder.adapterPosition)
-                mDataViewModel.deleteEmployee(mModelEmployeeInformation.id)
+                mDataViewModel.deleteEmployee(mModelEmployeeInformation)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(country_list)
+        itemTouchHelper.attachToRecyclerView(employeeList)
 
         /**
          * API Live data observer
          * */
         mDataViewModel.mEmployeeInformationData.observe(this, Observer {
-            if (isSwipeToRefreshCall) {
-                isSwipeToRefreshCall = false
-                swipeToRefresh.isRefreshing = false
-            } else
-                hideProgressDialog()
 
-            when (it.status) {
-                ResponseStatus.SUCCESS -> {
-                    mEmployeeList.clear()
-                    mEmployeeList = it.data
-                    mAdapter.setList(it.data)
-                }
-                ResponseStatus.FAIL ->
-                    toast(getString(R.string.serviceFailureError))
-                ResponseStatus.LOADING ->
-                    showProgressDialog()
-            }
+            mAdapter.setList(it)
         })
-
-        mDataViewModel.mEmployeeDeleteStatus.observe(this, Observer {
-            when (it.apiStatus) {
-                ResponseStatus.SUCCESS -> {
-                    context?.toast(getString(R.string.employee_deleted_successfully))
-
-                }
-                ResponseStatus.FAIL -> {
-                    context?.toast(getString(R.string.serviceFailureError))
-                    //mAdapter.setList(mEmployeeList)
-                }
-                ResponseStatus.LOADING ->
-                    showProgressDialog()
-            }
-        })
-    }
-
-    /**
-     * This method for get data from the viewModel
-     */
-    private fun getCountryFeaturesData(context: Context?) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (NetworkConnection.isNetworkConnected()) {
-                showProgressDialog()
-                mDataViewModel.getEmployeeInformation()
-            } else {
-                if (swipeToRefresh.isRefreshing) {
-                    swipeToRefresh.isRefreshing = false
-                }
-                context?.toast(getString(R.string.device_not_connected_to_internet))
-            }
-        } else {
-            if (NetworkConnection.isNetworkConnectedKitkat()) {
-                showProgressDialog()
-                mDataViewModel.getEmployeeInformation()
-
-            } else {
-                if (swipeToRefresh.isRefreshing) {
-                    swipeToRefresh.isRefreshing = false
-                }
-                context?.toast(getString(R.string.device_not_connected_to_internet))
-            }
-        }
-    }
-
-
-    /**
-     * Showing dialog when api call
-     */
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun setupProgressDialog() {
-        builder = AlertDialog.Builder(this)
-        builder.setCancelable(false)
-        builder.setView(R.layout.layout_loading_dialog)
-        dialog = builder.create()
-    }
-
-    private fun showProgressDialog() {
-        if (dialog != null && !dialog.isShowing) {
-            dialog.show()
-        }
-    }
-
-    private fun hideProgressDialog() {
-        if (dialog != null && dialog.isShowing) {
-            dialog.hide()
-            dialog.dismiss()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (dialog != null && dialog.isShowing) {
-            dialog.hide()
-            dialog.dismiss()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getCountryFeaturesData(context)
     }
 
     override fun onClick(v: View?) {
@@ -222,6 +123,13 @@ class EmployeeFeatureActivity : AppCompatActivity(), View.OnClickListener {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onItemClick(mModelEmployeeRegistration: ModelEmployeeRegistration, position: Int) {
+        var intent = Intent(this, AddEmployee::class.java)
+        intent.putExtra(Constant.openFor,1)
+        intent.putExtra(Constant.data,mModelEmployeeRegistration.id)
+        startActivity(intent)
     }
 
 

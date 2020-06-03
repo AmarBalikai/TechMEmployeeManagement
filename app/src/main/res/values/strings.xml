@@ -13,7 +13,7 @@
     <string name="input_required">Input required</string>
     <string name="device_not_connected_to_internet">"Device not connected to internet "</string>
     <string name="competency">Competency :</string>
-    <string name="project">Project</string>
+    <string name="project">Project : </string>
     <string name="action_add">Add</string>
     <string name="name">Enter Name</string>
     <string name="band">Enter Band</string>
@@ -24,6 +24,12 @@
     <string name="tester">Tester</string>
     <string name="id">ID</string>
     <string name="edit">Edit</string>
+    <string name="please_select_competency">Please select competency</string>
+    <string name="please_select_project">Please select project</string>
+    <string name="employee_id">Employee ID</string>
+    <string name="select_project">Select project</string>
+    <string name="enter_project">Enter Project</string>
+    <string name="add_project">Add Project</string>
 
     <string-array name="Projects">
         <item>Select project</item>

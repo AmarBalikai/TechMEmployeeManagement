@@ -31,8 +31,9 @@
             android:id="@+id/employeeId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="494503">
+            android:text="">
 
         </TextView>
 
@@ -53,14 +54,14 @@
                 android:id="@+id/employeeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Amar Balikai"
+                android:text=""
                 android:textStyle="bold" />
             <TextView
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:id="@+id/band"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="(P1)"
+                android:text=""
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -69,7 +70,7 @@
             android:id="@+id/designation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Project Manager"
+            android:text=""
              />
         <LinearLayout
             android:layout_marginTop="@dimen/_3sdp"
@@ -80,13 +81,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/competency"
-                android:textStyle="bold" />
+                 />
             <TextView
                 android:layout_marginLeft="@dimen/_5sdp"
-                android:id="@+id/department"
+                android:id="@+id/competency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mobility"
+                android:text=""
                 />
 
         </LinearLayout>
@@ -105,7 +106,7 @@
                 android:id="@+id/project"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ATT FirstNet"
+                android:text=""
                 />
 
         </LinearLayout>
